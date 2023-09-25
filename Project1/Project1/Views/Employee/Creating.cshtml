@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Creating";
+
+}
+<script src="~/Assets/CreateEmp.js"></script>
+
+<h1 class="form-group"> <label>Employee Details</label></h1>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-1 form-group">
+        <label>Employee Name</label>
+    </div>
+    <div class="col-lg-3 form-group ">
+        <input type="text" class="form-control" id="txtEmpName" placeholder="Enter Employee Name" onkeypress="RemoveValidationError('validateEmpName')" />
+        <label class="text-danger small hidden" id="validateEmpName">Validation Label</label>
+    </div>
+
+    <div class="col-lg-1 form-group">
+        <label class="text-right">Email</label>
+    </div>
+
+    <div class="col-lg-3 form-group">
+
+        <input type="email" class="form-control" id="txtEmpEmail" placeholder="Enter Employee Email" onkeypress="RemoveValidationError('validateEmpEmail')" />
+        <label class="text-danger small hidden" id="validateEmpEmail">Validation Label</label>
+    </div>
+
+    <div class="col-lg-2"></div>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-2 "></div>
+
+    <div class="col-lg-1 form-group ">
+        <label>Age</label>
+    </div>
+    <div class="col-lg-3 form-group">
+        <input type="number" class="form-control" id="numEmpAge" placeholder="Enter Employee Age" onkeypress="RemoveValidationError('validateEmpAge')" />
+        <label class="text-danger small hidden" id="validateEmpAge">Validation Label</label>
+    </div>
+    <div class="col-lg-1 form-group">
+        <label class="text">Address</label>
+    </div>
+    <div class="col-lg-3 form-group ">
+        <input type="text" class="form-control" id="txtEmpAddress" placeholder="Enter Employee Address" onkeypress="RemoveValidationError('validateEmpAddress')" />
+        <label class="text-danger small hidden" id="validateEmpAddress">Validation Label</label>
+    </div>
+
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2 "></div>
+    <div class="col-lg-1 form-group">
+        <label>Department</label>
+    </div>
+    <div class="col-lg-3 form-group">
+        <select id="getdeptid" class="form-control col-lg-3 form-group" name="getdeptid" onchange="RemoveValidationError('ValidateDept')">
+            <option value=0 id="deptoption">Select Department</option>
+        </select>
+        <label class="text-danger small hidden" id="ValidateDept">Validation Label</label>
+    </div>
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" onclick="SaveChanges()">Submit</button>
+</div>
+<div class="form-group">
+    <input type="submit" class="btn btn-primary" id="saveNew" value="SAVE" />
+</div>
+<div class=" form-group">
+    <input type="button" class="btn btn-primary btn-danger" id="cancelNew" value="CANCEL" />
+</div>

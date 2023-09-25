@@ -1,0 +1,80 @@
+select top 20*	from ApplicationUser
+select top 20*	from ApplicationUserRole
+select top 20*	from Role
+select top 20*  from RoleAccess
+select top 20*  from RoleAccessCode
+select top 20*  from PageModule
+select top 2*  from Page
+select top 2*  from PageSection
+
+
+--username, rolename, pagemodulename, pagename
+
+
+S		ELECT DISTINCT
+	R.NAME as Rolename, 
+	PM.NAME PageModuleName, 
+	P.NAME PageName,
+	AU.NAME username
+FROM
+	ApplicationUserRole AUR
+
+	INNER JOIN ApplicationUser AU ON AUR.FKApplicationUserID= AU.UID
+	INNER JOIN Role R ON AUR.FKRoleID= R.UID
+	INNER JOIN RoleAccess RA ON RA.FKRoleID= R.UID
+	INNER JOIN RoleAccessCode RAC ON RA.FKRoleAccessCodeID= RAC.UID
+	INNER JOIN PageModule PM ON RAC.FKPageModuleID= PM.UID
+	INNER JOIN Page P ON RAC.FKPageID = P.UID
+	INNER JOIN PageSection PS ON PS.FKPageID=PS.UID
+
+	SELECT * FROM Page 
+	--ORDER BY PKPageID Desc
+	ORDER BY PKPAGEID
+
+	SELECT * FROM PAGE
+	WHERE PKPageID LIKE '20_%'
+
+	--Subquery with select statement
+	SELECT * FROM ApplicationUserRole
+	--use IN when selecting multiple (its called inline query)
+	WHERE PKApplicationUserRoleID IN (SELECT PKApplicationUserRoleID FROM ApplicationUserRole WHERE FKRoleID >= 10216)
+	SELECT LEN('WAHAJ K')
+
+	SELECT UPPER('Anything')
+
+	SELECT LOWER('Anything')
+
+	SELECT RTRIM ('Pak   ')
+	
+	SELECT LTRIM ('      Pak')
+
+	SELECT REPLACE('WAHAJ', 'H','W')
+	
+	SELECT REPLICATE('Wahaj',4)
+
+	SELECT REVERSE ('Wahaj')
+
+	SELECT 'I' + space(4) + 'AM' + space(1) + 'Wahaj'
+
+	--Character data will come as output for the given numeric data.
+	SELECT STR(132.319)
+
+	--Integer value will come as output for the first character of given expression.
+	Select UNICODE('FISH') 
+	
+	--To get the use 'D', for month use 'M', for year use 'Y'
+	SELECT FORMAT ( getdate(),'D')
+
+	--will pr
+	SELECT ASCII('BWDF')
+
+
+Select top 20* FROM ServiceRoleAccess
+Select top 2* FROM Role
+Select top 2* FROM Service
+Select top 20* from InventorySaleUnit
+
+SELECT 
+	*
+
+--	Aggregate functions

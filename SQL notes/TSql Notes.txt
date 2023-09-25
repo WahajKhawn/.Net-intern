@@ -1,0 +1,160 @@
+MS SQL Server Join Types −
+
+There are different types of joins available in MS SQL Server −
+
+INNER JOIN − Returns rows when there is a match in both tables.
+
+LEFT JOIN − Returns all rows from the left table, even if there are no matches in the right table.
+
+RIGHT JOIN − Returns all rows from the right table, even if there are no matches in the left table.
+
+FULL JOIN − Returns rows when there is a match in one of the tables.
+
+SELF JOIN − This is used to join a table to itself as if the table were two tables, temporarily renaming at least one table 
+in the MS SQL Server statement.
+
+CARTESIAN JOIN − Returns the Cartesian product of the sets of records from the two or more joined tables.
+
+-------------------------------------------------------------------------------------------------------------------------------
+DROP TABLE statement is used to remove a table definition and all data, indexes, triggers, constraints, and permission
+specifications for that table.
+
+DROP TABLE table_name;
+
+---------------------------------------------------------------------------------------------------------------------------
+INSERT INTO statement is used to add new rows of data to a table in the database.
+Syntax
+Following are the two basic syntaxes of INSERT INTO statement.
+
+INSERT INTO TABLE_NAME [(column1, column2, column3,...columnN)]   
+VALUES (value1, value2, value3,...valueN); 
+
+--------------------------------------------------------------------
+You can create a record in CUSTOMERS table using second syntax as follows −
+
+INSERT INTO CUSTOMERS VALUES (7, 'Muffy', 24, 'Indore', 10000.00 );
+--------------------------------------------------------------------
+Populate One Table Using Another Table
+You can populate data into a table through SELECT statement over another table provided another table has a set of fields,
+which are required to populate first table. Following is the syntax −
+
+INSERT INTO first_table_name  
+   SELECT column1, column2, ...columnN  
+      FROM second_table_name 
+      [WHERE condition];
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+SELECT statement is used to fetch the data from a database table which returns data in the form of result table. These result tables are called result-sets.
+
+Syntax
+Following is the basic syntax of SELECT statement −
+
+SELECT column1, column2, columnN FROM table_name;
+Where, column1, column2...are the fields of a table whose values you want to fetch. If you want to fetch all the fields available in the field, then you can use the following syntax −
+
+SELECT * FROM table_name;
+-------------------------------------------------------------------------------------------------------------------------------
+
+UPDATE Query is used to modify the existing records in a table.
+
+You can use WHERE clause with UPDATE query to update selected rows otherwise all the rows would be affected.
+
+Syntax
+Following is the basic syntax of UPDATE query with WHERE clause −
+
+UPDATE table_name 
+SET column1 = value1, column2 = value2...., columnN = valueN 
+WHERE [condition];
+
+EG:
+UPDATE CUSTOMERS 
+SET ADDRESS = 'Pune' 
+WHERE ID = 6; 
+-------------------------------------------------------------------------------------------------------------------------------
+DELETE Query is used to delete the existing records from a table.
+
+You have to use WHERE clause with DELETE query to delete selected rows, otherwise all the records would be deleted.
+
+Syntax
+Following is the basic syntax of DELETE query with WHERE clause −
+
+DELETE FROM table_name 
+WHERE [condition]; 
+---------------------------------------------------------------------------------------------------------------------------
+LIKE clause is used to compare a value to similar values using wildcard operators. There are two wildcards used in 
+conjunction with the LIKE operator −
+
+The percent sign (%)
+The underscore (_)
+
+EG:
+SELECT * FROM CUSTOMERS 
+WHERE SALARY LIKE '200%'; 
+---------------------------------------------------------------------------------------------------------------------------
+ORDER BY clause is used to sort the data in ascending or descending order, based on one or more columns. 
+Some database sort query results in ascending order by default.
+
+EG:
+SELECT * FROM CUSTOMERS 
+ORDER BY NAME, SALARY
+
+For Descending order
+EG:
+SELECT * FROM CUSTOMERS 
+ORDER BY NAME DESC 
+
+---------------------------------------------------------------------------------------------------------------------------
+
+GROUP BY clause is used in collaboration with the SELECT statement to arrange identical data into groups.
+
+The GROUP BY clause follows the WHERE clause in a SELECT statement and precedes the ORDER BY clause.
+If you want to know the total amount of salary on each customer, then following will be the GROUP BY query.
+
+SELECT NAME, SUM(SALARY) as [sum of salary] FROM CUSTOMERS 
+   GROUP BY NAME;
+
+
+DISTINCT keyword is used in conjunction with SELECT statement to eliminate all the duplicate records and 
+fetching only unique records.
+
+EG:
+SELECT DISTINCT SALARY FROM CUSTOMERS 
+ORDER BY SALARY
+---------------------------------------------------------------------------------------------------------------------------
+Transaction Control
+There are following commands used to control transactions −
+
+COMMIT − To save the changes.
+
+ROLLBACK − To roll back the changes.
+
+SAVEPOINT − Creates points within groups of transactions in which to ROLLBACK.
+
+SET TRANSACTION − Places a name on a transaction
+
+---------------------------------------------------------------------------------------------------------------------------
+
+The Pivot operator converts the row data into a column data.
+
+The Unpivot relational operator works the opposite of the Pivot operator. It converts the column-based 
+data into row-based data and row-based data into a column based data.
+
+
+--------------------------------------------------------------------------------------------------------------------------
+Delete the column Birthday from the Persons table.
+
+
+ALTER TABLE
+ Persons
+DROP COLUMN
+ Birthday;
+--------------------------------------------------------------------------------------------------------------------------
+Add a column of type DATE called Birthday.
+
+
+ALTER TABLE
+ Persons
+ADD Birthday DATE
+;
+

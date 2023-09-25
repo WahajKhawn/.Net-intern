@@ -1,0 +1,235 @@
+select top 20*	from ApplicationUser
+select top 20*	from ApplicationUserRole
+select top 20*	from Role
+select top 20*  from RoleAccess
+select top 20*  from RoleAccessCode
+select top 20*  from PageModule
+select top 2*  from Page
+select top 2*  from PageSection
+
+
+--username, rolename, pagemodulename, pagename
+
+
+SELECT DISTINCT
+	R.NAME as Rolename, 
+	PM.NAME PageModuleName, 
+	P.NAME PageName,
+	AU.NAME username
+FROM
+	ApplicationUserRole AUR
+
+	INNER JOIN ApplicationUser AU ON AUR.FKApplicationUserID= AU.UID
+	INNER JOIN Role R ON AUR.FKRoleID= R.UID
+	INNER JOIN RoleAccess RA ON RA.FKRoleID= R.UID
+	INNER JOIN RoleAccessCode RAC ON RA.FKRoleAccessCodeID= RAC.UID
+	INNER JOIN PageModule PM ON RAC.FKPageModuleID= PM.UID
+	INNER JOIN Page P ON RAC.FKPageID = P.UID
+	INNER JOIN PageSection PS ON PS.FKPageID=PS.UID
+
+	SELECT * FROM Page 
+	--ORDER BY PKPageID Desc
+	ORDER BY PKPAGEID
+
+	SELECT * FROM PAGE
+	WHERE PKPageID LIKE '20_%'
+
+	--Subquery with select statement
+	SELECT * FROM ApplicationUserRole
+	--use IN when selecting multiple (its called inline query)
+	WHERE PKApplicationUserRoleID IN (SELECT PKApplicationUserRoleID FROM ApplicationUserRole WHERE FKRoleID >= 10216)
+	SELECT LEN('WAHAJ K')
+
+	SELECT UPPER('Anything')
+
+	SELECT LOWER('Anything')
+
+	SELECT RTRIM ('Pak   ')
+	
+	SELECT LTRIM ('      Pak')
+
+	SELECT REPLACE('WAHAJ', 'H','W')
+	
+	SELECT REPLICATE('Wahaj',4)
+
+	SELECT REVERSE ('Wahaj')
+
+	SELECT 'I' + space(4) + 'AM' + space(1) + 'Wahaj'
+
+	--Character data will come as output for the given numeric data.
+	SELECT STR(132.319)
+
+	--Integer value will come as output for the first character of given expression.
+	Select UNICODE('FISH') 
+	
+	--To get the use 'D', for month use 'M', for year use 'Y'
+	SELECT FORMAT ( getdate(),'D')
+
+	--will pr
+	SELECT ASCII('BWDF')
+
+
+Select top 20* FROM ServiceRoleAccess
+Select top 2* FROM Role
+
+Select top 2* FROM Service
+Select top 20* from InventorySaleUnit
+
+SELECT 
+	*
+--	Aggregate functions
+-- LANGUAGE INTERGRATIVE QUERIES
+
+
+
+-------------------------------------------
+
+select * from employee
+
+delete from Employee
+where employee_ID= 7
+
+
+CREATE PROCEDURE emp_Khi AS
+SELECT employeeName, email from Employee
+Where Address = 'Karachi'
+
+exec emp_Khi
+
+CREATE PROCEDURE emp_Lhr AS
+SELECT employee_ID, employeeName,Age, email FROM Employee  Where Address = 'Lahore'
+
+exec emp_Lhr
+
+CREATE PROCEDURE emp_Details @empName varchar (50) AS
+Select * FROM Employee where @empname = employeeName
+
+exec emp_Details @empName = 'Wahaj'
+
+CREATE PROcedure slctEmpByAddress @address varchar(60) AS
+Select * from Employee where address = @address
+ 
+exec slctEmpByAddress @address= 'Lahore'
+
+CREATE PROCEDURE slctEmpByName @empName varchar (50) AS 
+SELECT * FROM Employee where @empName= employeeName 
+
+exec slctEmpByName @empname = 'Wahaj'
+
+CREATE PROCEDURE getEmployeDetails AS 
+Select * from Employee 
+
+CREATE PROCEDURE sp_listemp 
+	@empName varchar(50), 
+	@empEmail varchar(50) , 
+	@empAge int , 
+	@empAddress varchar(100)
+		AS
+		BEGIN
+			INSERT INTO Employee (employeeName, email, age, Address, createdBy, createdOn, IsActive, IsDeleted, FKDept_ID)
+			VALUES (@empName, @empEmail, @empAge, @empAddress,1, GETDATE(), 1,0,4)
+		END
+
+		CREATE PROCEDURE sp_listemp
+	@empName varchar(50), 
+	@empEmail varchar(50) , 
+	@empAge int , 
+	@empAddress varchar(100),
+	@fkdeptid int
+		AS
+		BEGIN
+			INSERT INTO Employee (employeeName, email, age, Address, createdBy, createdOn, IsActive, IsDeleted, FKDept_ID)
+			VALUES (@empName, @empEmail, @empAge, @empAddress,1, GETDATE(), 1,0,@fkdeptid)
+		END
+	EXEC sp_listemp'Sam sye','Ss@gmail.com',44, 'Balochistan', 2, 2
+
+	SELECT * FROM Employee
+
+	DELETE
+	
+	delete from Employee
+	where employee_ID = 10
+	
+DROP PROCEDURE sp_listemp
+
+CREATE PROCEDURE  sp_deptdropdown 
+	AS
+	BEGIN SELECT dept_ID,deptName  from Department
+	END
+
+	DROP PROCEDURE sp_deptdropdown
+
+	update Employee
+	set address = 'Galaxy'
+	where employee_ID=15
+
+	Delete from employee
+	Where employee_ID >=15
+
+	SELECT * FROM Employee
+
+			CREATE PROCEDURE sp_listemp
+	@empName varchar(50), 
+	@empEmail varchar(50) , 
+	@empAge int , 
+	@empAddress varchar(100),
+	@fkdeptid int
+		AS
+		BEGIN
+			INSERT INTO Employee (employeeName, email, age, Address, createdBy, createdOn, IsActive, IsDeleted, FKDept_ID)
+			VALUES (@empName, @empEmail, @empAge, @empAddress,1, GETDATE(), 1,0,@fkdeptid)
+		END
+
+
+	exec sp_getemplist
+	CREATE PROCEDURE sp_deleteemp
+	@employee_ID int
+	AS 
+	BEGIN
+	Select from Employee
+	END
+
+
+	CREATE OR ALTER PROCEDURE sp_editemp 
+	AS
+	BEGIN
+	SELECT Employee.employee_ID, Employee.employeeName, Employee.email, Employee.age, Employee.Address, D.deptName from Employee
+	INNER JOIN DEPARTMENT D ON Employee.FKDept_ID= D.dept_ID 
+	END
+
+
+	CREATE OR ALTER PROCEDURE sp_deleteemp @employee_ID int 
+	AS 
+	BEGIN 
+	UPDATE Employee
+	SET isActive= 0, isDeleted=1
+	WHERE employee_ID= @employee_ID
+	END
+	
+	CREATE OR ALTER PROCEDURE  sp_getemplist 
+	AS
+
+	BEGIN 
+	
+	SELECT Employee.employee_ID, Employee.employeeName, Employee.email, Employee.age, Employee.Address, D.deptName from Employee
+	INNER JOIN DEPARTMENT D ON Employee.FKDept_ID= D.dept_ID
+	WHERE Employee.isActive =1 
+	END
+
+	exec sp_getemplist
+	
+	SELECT * FROM Employee
+	SELECT * FROM DEPARTMENT
+
+	CREATE OR ALTER PROCEDURE editemplist (@employee_ID int, @employeeName varchar(50), @email varchar(50), @age int, @address varchar(50), @dept_ID int)
+ 	AS BEGIN	
+	UPDATE employee
+	SET employeeName = @employeeName, 
+		email= @email,
+		age= @age,
+		Address= @address,
+		FKDept_ID= @dept_ID
+	WHERE employee_ID= @emplopee_ID
+	END
+
+	

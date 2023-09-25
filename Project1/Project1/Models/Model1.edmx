@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="t1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="dept_ID" />
+          </Key>
+          <Property Name="dept_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="deptName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="location" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createdOn" Type="datetime" />
+          <Property Name="createdBy" Type="varchar" MaxLength="50" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="updatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="isActive" Type="tinyint" Nullable="false" />
+          <Property Name="isDeleted" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employee_ID" />
+          </Key>
+          <Property Name="employee_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createdOn" Type="datetime" />
+          <Property Name="createdBy" Type="int" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="updatedBy" Type="int" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="isDeleted" Type="bit" />
+          <Property Name="FKDept_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createdOn" Type="datetime" />
+          <Property Name="createdBy" Type="varchar" MaxLength="50" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="updatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="isActive" Type="tinyint" Nullable="false" />
+          <Property Name="isDeleted" Type="tinyint" Nullable="false" />
+          <Property Name="FKdept_ID" Type="int" />
+        </EntityType>
+        <Association Name="FK__Employee__FKDept__75A278F5">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="dept_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="FKDept_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROLE__FKdept_ID__5DCAEF64">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="dept_ID" />
+            </Principal>
+            <Dependent Role="ROLE">
+              <PropertyRef Name="FKdept_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="editemplist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="employee_ID" Type="int" Mode="In" />
+          <Parameter Name="employeeName" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="age" Type="int" Mode="In" />
+          <Parameter Name="address" Type="varchar" Mode="In" />
+          <Parameter Name="dept_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="slctEmpByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="empName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_deleteemp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="employee_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_deptdropdown" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_getemplist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_listemp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="empName" Type="varchar" Mode="In" />
+          <Parameter Name="empEmail" Type="varchar" Mode="In" />
+          <Parameter Name="empAge" Type="int" Mode="In" />
+          <Parameter Name="empAddress" Type="varchar" Mode="In" />
+          <Parameter Name="fkdeptid" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="t1ModelStoreContainer">
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Employee__FKDept__75A278F5" Association="Self.FK__Employee__FKDept__75A278F5">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROLE__FKdept_ID__5DCAEF64" Association="Self.FK__ROLE__FKdept_ID__5DCAEF64">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="ROLE" EntitySet="ROLE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="t1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="dept_ID" />
+          </Key>
+          <Property Name="dept_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="deptName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createdOn" Type="DateTime" Precision="3" />
+          <Property Name="createdBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <Property Name="updatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Byte" Nullable="false" />
+          <Property Name="isDeleted" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__FKDept__75A278F5" FromRole="Department" ToRole="Employee" />
+          <NavigationProperty Name="ROLEs" Relationship="Self.FK__ROLE__FKdept_ID__5DCAEF64" FromRole="Department" ToRole="ROLE" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employee_ID" />
+          </Key>
+          <Property Name="employee_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createdOn" Type="DateTime" Precision="3" />
+          <Property Name="createdBy" Type="Int32" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <Property Name="updatedBy" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <Property Name="FKDept_ID" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Employee__FKDept__75A278F5" FromRole="Employee" ToRole="Department" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createdOn" Type="DateTime" Precision="3" />
+          <Property Name="createdBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <Property Name="updatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Byte" Nullable="false" />
+          <Property Name="isDeleted" Type="Byte" Nullable="false" />
+          <Property Name="FKdept_ID" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__ROLE__FKdept_ID__5DCAEF64" FromRole="ROLE" ToRole="Department" />
+        </EntityType>
+        <Association Name="FK__Employee__FKDept__75A278F5">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="dept_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="FKDept_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROLE__FKdept_ID__5DCAEF64">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="dept_ID" />
+            </Principal>
+            <Dependent Role="ROLE">
+              <PropertyRef Name="FKdept_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="empEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="ROLEs" EntityType="Self.ROLE" />
+          <AssociationSet Name="FK__Employee__FKDept__75A278F5" Association="Self.FK__Employee__FKDept__75A278F5">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROLE__FKdept_ID__5DCAEF64" Association="Self.FK__ROLE__FKdept_ID__5DCAEF64">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="ROLE" EntitySet="ROLEs" />
+          </AssociationSet>
+          <FunctionImport Name="sp_deptdropdown" ReturnType="Collection(t1Model.sp_deptdropdown_Result)" />
+          <FunctionImport Name="sp_listemp">
+            <Parameter Name="empName" Mode="In" Type="String" />
+            <Parameter Name="empEmail" Mode="In" Type="String" />
+            <Parameter Name="empAge" Mode="In" Type="Int32" />
+            <Parameter Name="empAddress" Mode="In" Type="String" />
+            <Parameter Name="fkdeptid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_deleteemp">
+          <Parameter Name="employee_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="slctEmpByName" ReturnType="Collection(t1Model.slctEmpByName_Result)">
+          <Parameter Name="empName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getemplist" ReturnType="Collection(t1Model.sp_getemplist_Result2)" />
+          <FunctionImport Name="editemplist">
+            <Parameter Name="employee_ID" Mode="In" Type="Int32" />
+            <Parameter Name="employeeName" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="age" Mode="In" Type="Int32" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="dept_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_deptdropdown_Result">
+          <Property Type="Int32" Name="dept_ID" Nullable="false" />
+          <Property Type="String" Name="deptName" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="sp_getemplist_Result">
+          <Property Type="String" Name="employeeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="age" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="FKDept_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="slctEmpByName_Result">
+          <Property Type="Int32" Name="employee_ID" Nullable="false" />
+          <Property Type="String" Name="employeeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="age" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="createdOn" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="createdBy" Nullable="true" />
+          <Property Type="DateTime" Name="updatedOn" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="updatedBy" Nullable="true" />
+          <Property Type="Boolean" Name="isActive" Nullable="true" />
+          <Property Type="Boolean" Name="isDeleted" Nullable="true" />
+          <Property Type="Int32" Name="FKDept_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_getemplist1_Result">
+          <Property Type="String" Name="employeeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="age" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="deptName" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="sp_getemplist_Result1">
+          <Property Type="String" Name="employeeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="age" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="deptName" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="sp_getemplist_Result2">
+          <Property Type="Int32" Name="employee_ID" Nullable="false" />
+          <Property Type="String" Name="employeeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="age" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="deptName" Nullable="false" MaxLength="30" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="t1ModelStoreContainer" CdmEntityContainer="empEntities">
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="t1Model.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="dept_ID" ColumnName="dept_ID" />
+                <ScalarProperty Name="deptName" ColumnName="deptName" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+                <ScalarProperty Name="updatedBy" ColumnName="updatedBy" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="t1Model.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="employee_ID" ColumnName="employee_ID" />
+                <ScalarProperty Name="employeeName" ColumnName="employeeName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+                <ScalarProperty Name="updatedBy" ColumnName="updatedBy" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="FKDept_ID" ColumnName="FKDept_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLEs">
+            <EntityTypeMapping TypeName="t1Model.ROLE">
+              <MappingFragment StoreEntitySet="ROLE">
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+                <ScalarProperty Name="updatedBy" ColumnName="updatedBy" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="FKdept_ID" ColumnName="FKdept_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_deptdropdown" FunctionName="t1Model.Store.sp_deptdropdown">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="t1Model.sp_deptdropdown_Result">
+                <ScalarProperty Name="dept_ID" ColumnName="dept_ID" />
+                <ScalarProperty Name="deptName" ColumnName="deptName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_listemp" FunctionName="t1Model.Store.sp_listemp" />
+          <FunctionImportMapping FunctionImportName="sp_deleteemp" FunctionName="t1Model.Store.sp_deleteemp" />
+          <FunctionImportMapping FunctionImportName="slctEmpByName" FunctionName="t1Model.Store.slctEmpByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="t1Model.slctEmpByName_Result">
+                <ScalarProperty Name="employee_ID" ColumnName="employee_ID" />
+                <ScalarProperty Name="employeeName" ColumnName="employeeName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+                <ScalarProperty Name="updatedBy" ColumnName="updatedBy" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="FKDept_ID" ColumnName="FKDept_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getemplist" FunctionName="t1Model.Store.sp_getemplist">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="t1Model.sp_getemplist_Result2">
+                <ScalarProperty Name="employee_ID" ColumnName="employee_ID" />
+                <ScalarProperty Name="employeeName" ColumnName="employeeName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="deptName" ColumnName="deptName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="editemplist" FunctionName="t1Model.Store.editemplist" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
